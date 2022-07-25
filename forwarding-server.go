@@ -15,7 +15,7 @@ func copyAndLog(i net.Conn, o net.Conn) {
 	i.Close()
 	o.Close()
 	if verbose {
-		fmt.Printf("Proxied %d bytes from %s to %s\n", written, i.RemoteAddr(), o.RemoteAddr())
+		log.Printf("Proxied %d bytes from %s to %s\n", written, i.RemoteAddr(), o.RemoteAddr())
 	}
 }
 
@@ -32,7 +32,7 @@ func handleConnection(proxyUser string, proxyPassword string, proxyHostName stri
 	}
 
 	if verbose {
-		fmt.Printf("Client '%v' connected. Will proxy to %s\n", client.RemoteAddr(), targetHost)
+		log.Printf("Client '%v' connected. Will proxy to %s\n", client.RemoteAddr(), targetHost)
 	}
 
 	target, err := dialSocksProxy.Dial("tcp", targetHost)
@@ -40,7 +40,7 @@ func handleConnection(proxyUser string, proxyPassword string, proxyHostName stri
 		log.Fatal("could not connect to target", err)
 	}
 	if verbose {
-		fmt.Printf("Connection to server %v established\n", target.RemoteAddr())
+		log.Printf("Connection to server %v established\n", target.RemoteAddr())
 	}
 
 	go copyAndLog(target, client)
