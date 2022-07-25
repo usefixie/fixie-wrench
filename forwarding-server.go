@@ -10,6 +10,15 @@ import (
 	"golang.org/x/net/proxy"
 )
 
+func copyAndLog(i net.Conn, o net.Conn) {
+	written, _ := io.Copy(i, o)
+	i.Close()
+	o.Close()
+	if verbose {
+		fmt.Printf("Proxied %d bytes from %s to %s\n", written, i.RemoteAddr(), o.RemoteAddr())
+	}
+}
+
 func handleConnection(proxyUser string, proxyPassword string, proxyHostName string, proxyPort int, client net.Conn, targetHost string) {
 	baseDialer := &net.Dialer{
 		Timeout:   30 * time.Second,
@@ -22,16 +31,20 @@ func handleConnection(proxyUser string, proxyPassword string, proxyHostName stri
 		panic("Error creating SOCKS proxy")
 	}
 
-	fmt.Printf("client '%v' connected!\n", client.RemoteAddr())
+	if verbose {
+		fmt.Printf("Client '%v' connected. Will proxy to %s\n", client.RemoteAddr(), targetHost)
+	}
 
 	target, err := dialSocksProxy.Dial("tcp", targetHost)
 	if err != nil {
 		log.Fatal("could not connect to target", err)
 	}
-	fmt.Printf("connection to server %v established!\n", target.RemoteAddr())
+	if verbose {
+		fmt.Printf("Connection to server %v established\n", target.RemoteAddr())
+	}
 
-	go func() { io.Copy(target, client) }()
-	go func() { io.Copy(client, target) }()
+	go copyAndLog(target, client)
+	go copyAndLog(client, target)
 }
 
 func startServer(proxyUser string, proxyPassword string, proxyHost string, proxyPort int, localPort int, targetHost string) {
@@ -45,7 +58,7 @@ func startServer(proxyUser string, proxyPassword string, proxyHost string, proxy
 	for {
 		client, err := incoming.Accept()
 		if err != nil {
-			log.Fatal("could not accept client connection", err)
+			log.Fatal("Could not accept client connection", err)
 		}
 		go handleConnection(proxyUser, proxyPassword, proxyHost, proxyPort, client, targetHost)
 	}

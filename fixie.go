@@ -10,6 +10,7 @@ import (
 	"sync"
 )
 
+var verbose = false
 var wg = &sync.WaitGroup{}
 
 func parseForwardingArg(arg string) (int, string, int) {
@@ -33,6 +34,7 @@ func parseForwardingArg(arg string) (int, string, int) {
 }
 
 func main() {
+
 	// Listen for keyboard interupt
 	signals := make(chan os.Signal, 1)
 	signal.Notify(signals, os.Interrupt)
@@ -43,11 +45,17 @@ func main() {
 		}
 	}()
 
-	// Get Fixie Socks connection string
-	var socksConnectionString = *flag.String("fixieSocksHost", "", "[Optional] The Fixie Socks connection string. If not provided, will use eng.FIXIE_SOCKS_HOST")
+	// Parse command line arguments and Fixie Socks
+	verboseFlag := flag.Bool("v", false, "Specifies verbose mode")
+	var socksConnectionString = flag.String("fixieSocksHost", "", "[Optional] The Fixie Socks connection string. If not provided, will use eng.FIXIE_SOCKS_HOST")
 	flag.Parse()
-	proxyUser, proxyPassword, proxyHost, proxyPort := getSocksConnection(socksConnectionString)
-	fmt.Printf("Fixie Socks cluster: %s:%d\n", proxyHost, proxyPort)
+	proxyUser, proxyPassword, proxyHost, proxyPort := getSocksConnection(*socksConnectionString)
+	verbose = *verboseFlag
+
+	if verbose {
+		fmt.Println("Fixie CLI (Verbose Mode)")
+		fmt.Printf("Fixie Socks cluster: %s:%d\n", proxyHost, proxyPort)
+	}
 
 	// Listen for connections and forward requests via Fixie Socks proxy
 	args := flag.Args()
@@ -59,7 +67,7 @@ func main() {
 		wg.Add(1)
 		localPort, remoteHost, remotePort := parseForwardingArg(arg)
 		targetHost := fmt.Sprintf("%s:%d", remoteHost, remotePort)
-		fmt.Printf("Will forward local port %d to %s via Fixie Socks\n", localPort, targetHost)
+		fmt.Printf("Forwarding local port %d to %s via Fixie Socks\n", localPort, targetHost)
 		go startServer(proxyUser, proxyPassword, proxyHost, proxyPort, localPort, targetHost)
 	}
 	wg.Wait()
