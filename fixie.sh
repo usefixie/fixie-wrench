@@ -1,3 +1,5 @@
+DIR="$(dirname "${BASH_SOURCE[0]}")"
+
 OS=""
 ARCH=""
 
@@ -29,5 +31,5 @@ elif [ "$OS" = "" ] ; then
   exit 1
 fi
 
-FIXIE_BINARY="./fixie-$OS-$ARCH"
+FIXIE_BINARY="$DIR/fixie-$OS-$ARCH"
 $FIXIE_BINARY $@
