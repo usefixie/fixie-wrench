@@ -1,4 +1,4 @@
-module usefixie.com/fixie
+module usefixie.com/fixie-wrench
 
 go 1.17
 

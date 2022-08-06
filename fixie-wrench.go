@@ -51,7 +51,7 @@ func main() {
 	verbose = *verboseFlag
 
 	if verbose {
-		fmt.Println("Fixie CLI (Verbose Mode)")
+		fmt.Println("Fixie-Wrench (Verbose Mode)")
 		fmt.Printf("Fixie Socks cluster: %s:%d\n", proxyHost, proxyPort)
 	}
 
