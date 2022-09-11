@@ -34,4 +34,11 @@ elif [ "$OS" = "" ] ; then
 fi
 
 FIXIE_BINARY="$DIR/fixie-wrench-$OS-$ARCH"
-$FIXIE_BINARY $@
+
+while $FIXIE_BINARY $@ ; ((ret=$?)) ;do
+  if [ $? -eq 1 ]; then
+    echo "Fixie-wrench exited with status 1. Restarting..."
+  else
+    break
+  fi
+done
