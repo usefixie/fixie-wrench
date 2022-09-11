@@ -37,12 +37,13 @@ func handleConnection(proxyUser string, proxyPassword string, proxyHostName stri
 
 	target, err := dialSocksProxy.Dial("tcp", targetHost)
 	if err != nil {
-		log.Fatal("could not connect to target", err)
+		log.Printf("Could not connect to target " + targetHost)
+		client.Close()
+		return
 	}
 	if verbose {
 		log.Printf("Connection to server %v established\n", target.RemoteAddr())
 	}
-
 	go copyAndLog(target, client)
 	go copyAndLog(client, target)
 }
@@ -58,7 +59,7 @@ func startServer(proxyUser string, proxyPassword string, proxyHost string, proxy
 	for {
 		client, err := incoming.Accept()
 		if err != nil {
-			log.Fatal("Could not accept client connection", err)
+			log.Printf("Could not accept client connection", err)
 		}
 		go handleConnection(proxyUser, proxyPassword, proxyHost, proxyPort, client, targetHost)
 	}

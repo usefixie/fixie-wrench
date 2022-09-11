@@ -3,7 +3,6 @@ package main
 import (
 	"flag"
 	"fmt"
-	"log"
 	"os"
 	"os/signal"
 	"strconv"
@@ -14,19 +13,29 @@ import (
 var verbose = false
 var wg = &sync.WaitGroup{}
 
+func logInvalidConfig(message string) {
+	fmt.Println(message)
+	os.Exit(2)
+}
+
+func logInvalidConfigf(message string, args ...string) {
+	fmt.Printf(message+"\n", args)
+	os.Exit(2)
+}
+
 func parseForwardingArg(arg string) (int, string, int) {
 	s := strings.Split(arg, ":")
 	if len(s) != 3 {
-		log.Fatal("Invalid port fowarding argument. Each positional port forwarding argument should be in the form of localPort:remoteHost:remotePort\n")
+		logInvalidConfig("Invalid port fowarding argument. Each positional port forwarding argument should be in the form of localPort:remoteHost:remotePort")
 	}
 	localPort, err := strconv.Atoi(s[0])
 	if err != nil {
-		log.Fatalf("Invalid local port '%s'. Port numbers should be integers.\n", s[0])
+		logInvalidConfigf("Invalid local port '%s'. Port numbers should be integers.\n", s[0])
 	}
 	remoteHost := s[1]
 	remotePort, err := strconv.Atoi(s[2])
 	if err != nil {
-		log.Fatalf("Invalid remote port '%s'. Port numbers should be integers.", s[0])
+		logInvalidConfigf("Invalid remote port '%s'. Port numbers should be integers.", s[2])
 	}
 	return localPort, remoteHost, remotePort
 }
