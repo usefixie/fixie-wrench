@@ -16,7 +16,7 @@ fixie-wrench $localPort:$host:$remotePort
 For example, to forward a Postgres database running on port 5432 of my-database.example.com to port 1234 on your application host: `fixie-wrench 1234:my-database.example.com:5432`. With Fixie Wrench running, your application can now connect to the remote database by connecting to `localhost:1234`.
 
 ## Installation
-Download the latest release from the [releases page](https://github.com/usefixie/fixie-wrench/releases/) and place the files in your project directory. You can now execute Fixie Wrench locally by running `./fixie-wrench` in the terminal or, in production, by adding your `fixie-wrench` command to your procfile.
+Download the latest release from the [releases page](https://github.com/usefixie/fixie-wrench/releases/) and place the files in your project directory. You can now execute Fixie Wrench locally by running `./fixie-wrench` in the terminal or, in production, by adding your `fixie-wrench` command to your Procfile.
 
 ## Advanced use
 
@@ -45,6 +45,14 @@ This means "using the FIXIE_SOCKS_HOST environment variable, make my-first-datab
 
 ## Building for other platforms
 Fixie provides prebuilt binaries for common platforms and chip architectures, but if you want to run Fixie Wrench on a more esoteric system (eg. FreeBSD running on a 32-bit Intel chip), you can do so by cloning the repository and running `make build` after installing Go 1.17. This will produce a binary (`bin/fixie-wrench`) compiled for your OS and architecture.
+
+## Example app
+To see Fixie Wrench in action, check out the [example app](https://github.com/usefixie/fixie-wrench-example-app).
+
+You can also deploy the example app with a click:
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/usefixie/fixie-wrench-example-app)
+
 
 ## License
 
