@@ -13,7 +13,7 @@ Assuming your `FIXIE_SOCKS_HOST` enironment variable is set, forwarding a connec
 fixie-wrench $localPort:$host:$remotePort
 ```
 
-For example, to forward a Postgres database running on port 5432 of my-database.example.com to port 1234 on your application host: `fixie-wrench 1234:my-database.example.com:5432`. With Fixie Wrench running, your application can now connect to the remote database by connecting to `localhost:1234`.
+For example, to forward a Postgres database running on port 5432 of my-database.example.com to port 1234 on your application host: `fixie-wrench 1234:my-database.example.com:5432`. With fixie-wrench running, your application can now connect to the remote database by connecting to `localhost:1234`.
 
 ## Installation
 
@@ -32,16 +32,16 @@ You can download the latest release from the [releases page](https://github.com/
 
 ### Optional command line flags:
 
-- **-v**: Verbose mode. In verbose mode, Fixie Wrench will print logs for each request to STDERR
-- **--socksConnectionString**: If set, Fixie Wrench will use this connection string instead of the `FIXIE_SOCKS_HOST` environment variable
+- **-v**: Verbose mode. In verbose mode, fixie-wrench will print logs for each request to STDERR
+- **--socksConnectionString**: If set, fixie-wrench will use this connection string instead of the `FIXIE_SOCKS_HOST` environment variable
 
 ### Forwarding multiple ports:
 
-Fixie Wrench accepts multiple positional arguments, each specifying a forwarding command in the form of `$localPort:$host:$remotePort`. A single instance of Fixie Wrench can proxy to many remote hosts on different local ports.
+fixie-wrench accepts multiple positional arguments, each specifying a forwarding command in the form of `$localPort:$host:$remotePort`. A single instance of fixie-wrench can proxy to many remote hosts on different local ports.
 
 ### Platform-specific binaries and the cross-platform launcher
 
-If you install fixie-wrench from the releases page, `./bin/fixie-wrench` is a bash script which determines the OS and architecture of your machine and loads the correct pre-built Fixie Wrench binary. Out of the box, the launcher supports 64 bit x86 chips and 64 bit ARM chips. It supports MacOS and Linux, making it possible to use the same command locally on an Apple Silicon Macbook and an x86 Linux server like Heroku.
+If you install fixie-wrench from the releases page, `./bin/fixie-wrench` is a bash script which determines the OS and architecture of your machine and loads the correct pre-built fixie-wrench binary. Out of the box, the launcher supports 64 bit x86 chips and 64 bit ARM chips. It supports MacOS and Linux, making it possible to use the same command locally on an Apple Silicon Macbook and an x86 Linux server like Heroku.
 
 You can also call out to a specific prebuilt binary directly (eg. `fixie-wrench-linux-arm64`), but you should not need to in normal operation.
 
@@ -54,10 +54,10 @@ fixie-wrench -v 1234:my-first-database.example.com:5432 1235:my-second-database.
 This means "using the FIXIE_SOCKS_HOST environment variable, make my-first-database.example.com:5432 available to my application on localhost:1234, and make my-second-database.example.com:5432 available to my application on localhost:1235, and print verbose logs."
 
 ## Building for other platforms
-Fixie provides prebuilt binaries for common platforms and chip architectures, but if you want to run Fixie Wrench on a more esoteric system (eg. FreeBSD running on a 32-bit Intel chip), you can do so by cloning the repository and running `make build` after installing Go 1.17. This will produce a binary (`bin/fixie-wrench`) compiled for your OS and architecture.
+Fixie provides prebuilt binaries for common platforms and chip architectures, but if you want to run fixie-wrench on a more esoteric system (eg. FreeBSD running on a 32-bit Intel chip), you can do so by cloning the repository and running `make build` after installing Go 1.17. This will produce a binary (`bin/fixie-wrench`) compiled for your OS and architecture.
 
 ## Example app
-To see Fixie Wrench in action, check out the [example app](https://github.com/usefixie/fixie-wrench-example-app).
+To see fixie-wrench in action, check out the [example app](https://github.com/usefixie/fixie-wrench-example-app).
 
 You can also deploy the example app with a click:
 
@@ -66,8 +66,6 @@ You can also deploy the example app with a click:
 
 ## License
 
-fixie-wrench was created by Fixie Technologies LLC and is released under the MIT License. You are free to use, modify, and fork fixe-wrench without restriction.
+fixie-wrench was created by Fixie Technologies LLC and is released under the MIT License. You are free to use, modify, and fork fixie-wrench without restriction.
 
 While this tool is designed for use with Fixie Socks, and is only tested with Fixie Socks, it should work with any SOCKSv5 proxy server.
-
-We believe the MIT license is a reason to choose fixie-wrench. If you are going to run code on your server, you should be able to read the code and build from source. The MIT license does not encumber customers who are building closed-source projects as the GPL, AGPL, and other copy-left licenses may.
