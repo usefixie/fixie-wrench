@@ -16,7 +16,17 @@ fixie-wrench $localPort:$host:$remotePort
 For example, to forward a Postgres database running on port 5432 of my-database.example.com to port 1234 on your application host: `fixie-wrench 1234:my-database.example.com:5432`. With Fixie Wrench running, your application can now connect to the remote database by connecting to `localhost:1234`.
 
 ## Installation
-Download the latest release from the [releases page](https://github.com/usefixie/fixie-wrench/releases/) and place the files in your project directory. You can now execute Fixie Wrench locally by running `./fixie-wrench` in the terminal or, in production, by adding your fixie-wrench command to your Procfile.
+
+### Recommended: Installer
+The easiest way to install fixie-wrench is to use the installer. In your project directory, run:
+
+```
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/usefixie/fixie-wrench/HEAD/install.sh)"
+```
+
+### Alternative: Download pre-compiled binaries
+
+You can download the latest release from the [releases page](https://github.com/usefixie/fixie-wrench/releases/) and place the files in your project directory. You should download at least `fixie-wrench-linux-amd64` (for execution on Heroku), and you may also want to download the binary for your local machine. If you run on more than one platform, we suggest also downloading the `fixie-wrench` shell script, which will automatically select the correct platform-specific binary at runtime.
 
 ## Advanced use
 
