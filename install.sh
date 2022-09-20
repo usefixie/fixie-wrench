@@ -24,7 +24,7 @@ files=(
 for file in ${files[@]}; do
   echo -ne '🟦'
   url="https://github.com/usefixie/fixie-wrench/releases/latest/download/$file"
-  curl -s "$url" --output "$install_dir/$file"
+  curl -L -s "$url" --output "$install_dir/$file"
 done
 
 echo -ne "\r✅ fixie-wrench has been installed to $install_dir\n\n"
