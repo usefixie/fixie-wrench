@@ -1,3 +1,5 @@
+![Fixie](https://usefixie.com/img/logo.svg)
+
 # fixie-wrench
 
 fixie-wrench is a command line utility that makes it easy to proxy any TCP connection through [Fixie Socks](https://usefixie.com/documentation/socks), even if your language or wrenchent library does not natively support SOCKSv5 proxies. By connecting through Fixie Socks, your application with have a stable set of outbound IP addresses, making it possible to address a remote service that performs IP address whitelisting from Heroku or other platforms that provide ephemeral instances.
@@ -62,7 +64,6 @@ To see fixie-wrench in action, check out the [example app](https://github.com/us
 You can also deploy the example app with a click:
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/usefixie/fixie-wrench-example-app)
-
 
 ## License
 
