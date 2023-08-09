@@ -54,7 +54,7 @@ func main() {
 
 	// Parse command line arguments and Fixie Socks
 	verboseFlag := flag.Bool("v", false, "Specifies verbose mode")
-	var socksConnectionString = flag.String("fixieSocksHost", "", "[Optional] The Fixie Socks connection string. If not provided, will use eng.FIXIE_SOCKS_HOST")
+	var socksConnectionString = flag.String("fixieSocksHost", "", "[Optional] The Fixie Socks connection string. If not provided, will use env.FIXIE_SOCKS_HOST")
 	flag.Parse()
 	proxyUser, proxyPassword, proxyHost, proxyPort := getSocksConnection(*socksConnectionString)
 	verbose = *verboseFlag
