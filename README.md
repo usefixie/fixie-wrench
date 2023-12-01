@@ -35,7 +35,7 @@ You can download the latest release from the [releases page](https://github.com/
 ### Optional command line flags:
 
 - **-v**: Verbose mode. In verbose mode, fixie-wrench will print logs for each request to STDERR
-- **--socksConnectionString**: If set, fixie-wrench will use this connection string instead of the `FIXIE_SOCKS_HOST` environment variable
+- **--fixieSocksHost**: If set, fixie-wrench will use this connection string instead of the `FIXIE_SOCKS_HOST` environment variable
 
 ### Forwarding multiple ports:
 
